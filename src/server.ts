@@ -1,9 +1,15 @@
-import express from 'express';
+import express from 'express'
+import router from './router'
+import morgan from 'morgan'
 
 const app = express();
 
+app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 // Translation Logic
-const translateToBraille = (text: string): string => {
+export const translateToBraille = (text: string): string => {
         const brailleMapping: { [key: string]: string } = {
           A: "⠈",
           B: "⠃",
@@ -56,7 +62,7 @@ const translateToBraille = (text: string): string => {
             brailleText += char;
           }
         }
-  return 'Braille Translation: ' + brailleText;
+  return brailleText;
 };
 
 app.use(express.json());
@@ -77,5 +83,8 @@ app.post('/translate', (req, res) => {
 
   res.status(200).json({ brailleTranslation });
 });
+
+//Mounting the router 
+app.use('/api', router)
 
 export default app;
