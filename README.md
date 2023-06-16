@@ -1,4 +1,4 @@
-Sure! Here's an example of a README file for your B-Link application:
+
 
 # B-Link
 
